@@ -28,8 +28,7 @@ class TinyURL(tornado.web.RequestHandler):
     def get(self):
         try:
             # TODO: move this to a model.
-            rows = db.Db().read('tinyurl', ['short_url', memoryview(str.encode(self.request.uri[1:], 'utf8'))]).fetchall()
-            result = rows[0][1].decode('utf8')
+            result = self.short_url_model.get_original_url(self.request.uri[1:])
             self.redirect(result)
 
         except Exception as e:

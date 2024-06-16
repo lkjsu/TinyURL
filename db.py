@@ -43,7 +43,7 @@ class Db:
             print('Error reading value', se)
 
         return result
-    
+
     def update(self, table_name, original_url):
         result = None
 
@@ -58,6 +58,7 @@ class Db:
                 result = cursor.execute(query, (table_name, memoryview()))
         except SyntaxError as se:
             print('Error updating value', se)
-    
+
     def delete(self, query):
         pass
+

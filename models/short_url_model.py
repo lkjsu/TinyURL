@@ -12,7 +12,7 @@ class ShortUrlModel(Db):
 
         super().__init__()
         self.sequencer = sequencer.Sequencer()
-    
+
     def create_new_short_url(self, long_url):
 
         row = None
@@ -25,3 +25,9 @@ class ShortUrlModel(Db):
             return short_url.decode('utf8')
         row = rows[0]
         return row[2].decode('utf8')
+
+    def get_original_url(self, short_url):
+        params = ['short_url', memoryview(str.encode(short_url, 'utf8'))]
+        rows = self.read('tinyurl', params).fetchall()
+        result = rows[0][1].decode('utf8')
+        return result

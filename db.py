@@ -30,7 +30,7 @@ class Db:
 
         base_query = '''
             SELECT * FROM %s ''' % (table_name)
-        
+
         where_clause = '''WHERE %s=?'''%params[0]
 
         query = base_query + where_clause
@@ -44,7 +44,7 @@ class Db:
 
         return result
 
-    def update(self, table_name, original_url):
+    def update(self, table_name, params):
         result = None
 
         query = '''

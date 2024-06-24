@@ -34,8 +34,12 @@ class TinyURL(tornado.web.RequestHandler):
         except Exception as e:
             print(e)
 
-    def delete(self, id):
-        pass
+    def delete(self):
+        try:
+            result = self.short_url_model.delete_short_url(self.request.uri[1:])
+            print(result)
+        except Exception as e:
+            print(e)
 
 
 routes = [

@@ -7,7 +7,7 @@ import sqlite3
 
 class Db:
     def __init__(self):
-        self.db = '/Users/kish/TinyURL/tinyurl.db'
+        self.db = 'tinyurl.db'
 
     def add(self, table_name, params):
         result = None
@@ -29,7 +29,7 @@ class Db:
         result = None
 
         base_query = '''
-            SELECT * FROM %s ''' % (table_name)
+            SELECT * FROM %s ''' % table_name
 
         where_clause = '''WHERE %s=?'''%params[0]
 
@@ -44,7 +44,7 @@ class Db:
 
         return result
 
-    def update(self, table_name, params):
+    def update(self, table_name, *params):
         result = None
 
         query = '''
@@ -59,6 +59,22 @@ class Db:
         except SyntaxError as se:
             print('Error updating value', se)
 
-    def delete(self, query):
-        pass
+    def delete(self, table_name, params):
+        print(params[1], params)
+        result = None
+
+        base_query = '''DELETE FROM %s ''' % table_name
+
+        where_clause = '''WHERE %s=?'''%params[0]
+
+        query = base_query + where_clause
+        print(query)
+        try:
+            with sqlite3.connect(self.db) as conn:
+                cursor = conn.cursor()
+                result = cursor.execute(query, (params[1],))
+        except SyntaxError as se:
+            print('Error reading value', se)
+        
+        return result
 

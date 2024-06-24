@@ -31,3 +31,9 @@ class ShortUrlModel(Db):
         rows = self.read('tinyurl', params).fetchall()
         result = rows[0][1].decode('utf8')
         return result
+
+    def delete_short_url(self, short_url):
+        params = ['short_url', memoryview(str.encode(short_url, 'utf8'))]
+        rows = self.delete('tinyurl', params).fetchall()
+        result = rows
+        return result
